@@ -1,0 +1,28 @@
+_schema-version: 2.0.0
+ID: HA300
+description: HA300 Application
+version: 0.0.1
+modules:
+  - name: HDB
+    type: hdb
+    path: HDB
+    requires:
+      - name: hdi_HDB
+        properties:
+          TARGET_CONTAINER: ~{hdi-service-name}
+      - name: CrossSchemaService
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: GrantorService
+          service: ~{ext_schema_service}
+resources:
+  - name: hdi_HDB
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-service-name: ${service-name}
+  - name: CrossSchemaService
+    type: org.cloudfoundry.existing-service
+    properties:
+      ext_schema_service: ${service-name}
+    parameters:
+      service-name: CROSS_SCHEMA_SERVICE
