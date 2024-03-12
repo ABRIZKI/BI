@@ -1,0 +1,29 @@
+{ "format_version":1,
+  "imports":
+  [
+	{
+	  "target_table":"HA300::CACHEDTABLE",
+	  "source_data": {
+		"data_type": "CSV",
+		  "file_name": "HA300::cacheData.csv",
+		  "has_header": false,
+		  "dialect": "HANA",
+		  "type_config": {
+			"delimiter": ","
+		  }
+		},
+	  "import_settings": {
+		"import_columns": [
+		  "CACHEDCOLUMN",
+		  "NOTCACHEDCOLUMN",
+		  "MEASURE"
+		]
+	  },
+	  "column_mappings": {
+		"CACHEDCOLUMN": 1,
+		"NOTCACHEDCOLUMN": 2,
+		"MEASURE": 3
+	  }
+	}
+  ]
+}

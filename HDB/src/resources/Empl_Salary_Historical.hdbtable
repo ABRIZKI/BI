@@ -1,0 +1,7 @@
+COLUMN TABLE "HA300::Empl_Salary_Historical"
+	(
+	"Year" INTEGER CS_INT NOT NULL,
+	"EmployeeID" INTEGER CS_INT NOT NULL,
+	"TotalSalary" DECIMAL(10, 2) CS_FIXED,
+	PRIMARY KEY ("Year", "EmployeeID")
+)

@@ -1,0 +1,27 @@
+COLUMN TABLE "HA300::OrgEmployees_00"(
+	"EmployeeId" NVARCHAR(10) NOT NULL,
+	"FirstName" NVARCHAR(40),
+	"MiddleName" NVARCHAR(40),
+	"LastName" NVARCHAR(40),
+	"Initials" NVARCHAR(10),
+	"Sex" NVARCHAR(1),
+	"Language" NVARCHAR(1),
+	"PhoneNumber" NVARCHAR(30),
+	"EmailAddress" NVARCHAR(255),
+	"LoginName" NVARCHAR(20),
+	"AddressId" NVARCHAR(10),
+	"StartDate" DATE,
+	"EndDate" DATE,
+	"Currency" NVARCHAR(5),
+	"SalaryAmount" DECIMAL(15, 2),
+	"AccountNumber" NVARCHAR(10),
+	"BankId" NVARCHAR(10),
+	"BankName" NVARCHAR(255),
+	"EmployeePicURL" NVARCHAR(255),
+	"ManagerId" NVARCHAR(10),
+	"OrgUnitId" NVARCHAR(10),
+	PRIMARY KEY (
+		"EmployeeId"
+	)
+)
+UNLOAD PRIORITY 5 AUTO MERGE;

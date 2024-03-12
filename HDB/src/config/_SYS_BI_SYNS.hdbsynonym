@@ -1,0 +1,14 @@
+{
+  "HA300::M_TIME_DIMENSION_SYS_BI": {
+    "target": {
+      "object": "M_TIME_DIMENSION",
+      "schema": "_SYS_BI"
+    }
+  },
+  "HA300::M_FISCAL_CALENDAR_SYS_BI": {
+    "target": {
+      "object": "M_FISCAL_CALENDAR",
+      "schema": "_SYS_BI"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "role": {
+    "name": "HA300::DATA_VIEWER2",
+    "schema_analytic_privileges": [
+      {
+        "privileges": [
+          "HA300::AP_COUNTRY_DE_PROD_NOTEBOOKS"
+        ]
+      }
+    ]
+  }
+}

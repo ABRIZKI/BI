@@ -1,0 +1,7 @@
+COLUMN TABLE "HA300::Employees"
+	(
+	"EmployeeID" INTEGER CS_INT NOT NULL,
+	"Country" NVARCHAR(2),
+	"BankAccountNumber" NVARCHAR(15),
+	PRIMARY KEY ("EmployeeID")
+	)

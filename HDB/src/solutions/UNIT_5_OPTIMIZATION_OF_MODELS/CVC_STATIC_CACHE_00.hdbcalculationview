@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HA300::CVC_STATIC_CACHE_00" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="Static Cache"/>
+<localVariables/>
+<variableMappings/>
+<executionHints name="query_level_sql_hints" value="RESULT_CACHE"/>
+<executionHints name="qo_pop_hints" value="RESULT_CACHE"/>
+<dataSources>
+  <DataSource id="HA300::CACHEDTABLE">
+    <resourceUri>HA300::CACHEDTABLE</resourceUri>
+  </DataSource>
+</dataSources>
+<staticResultCache cacheEnabled="true" retentionPeriod="60" force="false">
+  <cacheColumn id="CACHEDCOLUMN"/>
+  <cacheColumn id="MEASURE"/>
+</staticResultCache>
+<calculationViews/>
+<logicalModel id="HA300::CACHEDTABLE">
+  <attributes>
+    <attribute id="CACHEDCOLUMN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CACHEDCOLUMN"/>
+      <keyMapping columnObjectName="CACHEDTABLE" columnName="CACHEDCOLUMN"/>
+    </attribute>
+    <attribute id="NOTCACHEDCOLUMN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTCACHEDCOLUMN"/>
+      <keyMapping columnObjectName="CACHEDTABLE" columnName="NOTCACHEDCOLUMN"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="MEASURE" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="MEASURE"/>
+      <measureMapping columnObjectName="CACHEDTABLE" columnName="MEASURE"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

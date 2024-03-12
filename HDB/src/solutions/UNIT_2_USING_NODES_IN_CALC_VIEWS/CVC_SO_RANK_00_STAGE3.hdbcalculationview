@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HA300::CVC_SO_RANK_00_STAGE3" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Sales Orders Rank"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="HA300::CVCS_SO" partitionedExecution="false">
+    <resourceUri>HA300::CVCS_SO</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1" partitionedExecution="false">
+    <viewAttributes>
+      <viewAttribute id="COUNTRY" measureType="simple"/>
+      <viewAttribute id="PRODUCT_ID" measureType="simple"/>
+      <viewAttribute id="GROSS_AMOUNT" aggregationType="sum" measureType="simple"/>
+    
+      <viewAttribute id="BP_COMPANY_NAME" measureType="simple"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="HA300::CVCS_SO"/>
+    <rankingFilter type="ROW_NUMBER" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="true">
+      <partitionViewAttributeName id="COUNTRY"/>
+      <partitionViewAttributeName id="BP_COMPANY_NAME"/>
+      <order byViewAttributeName="GROSS_AMOUNT" direction="DESC"/>
+      <rankThreshold>
+        <value>5</value>
+      </rankThreshold>
+      <rankViewAttributeName>RANK</rankViewAttributeName>
+    </rankingFilter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Rank_1">
+  <attributes>
+    <attribute id="COUNTRY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COUNTRY"/>
+      <keyMapping columnObjectName="Rank_1" columnName="COUNTRY"/>
+    </attribute>
+    <attribute id="PRODUCT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRODUCT_ID"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PRODUCT_ID"/>
+    </attribute>
+  
+    <attribute id="BP_COMPANY_NAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP_COMPANY_NAME"/>
+  
+      <keyMapping columnObjectName="Rank_1" columnName="BP_COMPANY_NAME"/>
+  
+    </attribute>
+  
+    <attribute id="RANK" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RANK"/>
+  
+      <keyMapping columnObjectName="Rank_1" columnName="RANK"/>
+  
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="GROSS_AMOUNT" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GROSS_AMOUNT"/>
+      <measureMapping columnObjectName="Rank_1" columnName="GROSS_AMOUNT"/>
+    </measure></baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="105" y="232"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HA300::CVD_CONTROL_PARALLELIZATION_00" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false" propagateInstantiation="true">
+<descriptions defaultDescription="CVD_CONTROL_PARALLELIZATION_00"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="HA300::Empl_Salary_Current" partitionedExecution="true">
+    <partitionAttributeName>Year</partitionAttributeName>
+    <resourceUri>HA300::Empl_Salary_Current</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Start_Parallel">
+    <viewAttributes>
+      <viewAttribute id="Year"/>
+      <viewAttribute id="EmployeeID"/>
+      <viewAttribute id="TotalSalary"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="HA300::Empl_Salary_Current"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Processing_In_Parallel">
+    <viewAttributes>
+      <viewAttribute id="Year"/>
+      <viewAttribute id="EmployeeID"/>
+      <viewAttribute id="TotalSalary"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="partition_id" datatype="VARCHAR" length="13" expressionLanguage="COLUMN_ENGINE">
+        <formula>partitionid()</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Start_Parallel"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Stop_Parallel" partitionedExecution="true">
+    <viewAttributes>
+      <viewAttribute id="Year"/>
+      <viewAttribute id="EmployeeID"/>
+      <viewAttribute id="TotalSalary"/>
+      <viewAttribute id="partition_id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Processing_In_Parallel" emptyUnionBehavior="NO_ROW"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Stop_Parallel">
+  <attributes>
+    <attribute id="Year" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Year"/>
+      <keyMapping columnObjectName="Stop_Parallel" columnName="Year"/>
+    </attribute>
+    <attribute id="EmployeeID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EmployeeID"/>
+      <keyMapping columnObjectName="Stop_Parallel" columnName="EmployeeID"/>
+    </attribute>
+    <attribute id="TotalSalary" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TotalSalary"/>
+      <keyMapping columnObjectName="Stop_Parallel" columnName="TotalSalary"/>
+    </attribute>
+    <attribute id="partition_id" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="partition_id"/>
+      <keyMapping columnObjectName="Stop_Parallel" columnName="partition_id"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="112" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Start_Parallel" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="108" y="421"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="false" modelObjectName="Processing_In_Parallel" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="341"/>
+      <rectangleSize height="30" width="193"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Stop_Parallel" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="108" y="236"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

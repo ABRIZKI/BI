@@ -1,0 +1,14 @@
+{
+  "HA300::SNWD_BP": {},
+  "HA300::SNWD_CONTACT": {},
+  "HA300::SNWD_BP_EM": {},
+  "HA300::SNWD_PO": {},
+  "HA300::SNWD_PO_I": {},
+  "HA300::SNWD_PD": {},
+  "HA300::SNWD_SO": {},
+  "HA300::SNWD_SO_I": {},
+  "HA300::SNWD_AD": {},
+  "HA300::SNWD_EMPLOYEES": {},
+  "HA300::DOM_MEPRF": {},
+  "HA300::DOM_MEPRFT": {}
+}

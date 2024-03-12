@@ -1,0 +1,48 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "HA300::M_TIME_DIMENSION_00",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "HA300::M_TIME_DIMENSION_00_Data.csv",
+                "has_header": true
+            },
+
+            "import_settings": {
+                "import_columns": [
+                    	"DATETIMESTAMP",
+						"DATE_SQL",
+						"DATETIME_SAP",
+						"DATE_SAP",
+						"YEAR",
+						"QUARTER",
+						"MONTH",
+						"WEEK",
+						"WEEK_YEAR",
+						"DAY_OF_WEEK",
+						"DAY",
+						"HOUR",
+						"MINUTE",
+						"SECOND",
+						"CALQUARTER",
+						"CALMONTH",
+						"CALWEEK",
+						"YEAR_INT",
+						"QUARTER_INT",
+						"MONTH_INT",
+						"WEEK_INT",
+						"WEEK_YEAR_INT",
+						"DAY_OF_WEEK_INT",
+						"DAY_INT",
+						"HOUR_INT",
+						"MINUTE_INT",
+						"SECOND_INT",
+						"MONTH_LAST_DAY",
+						"TZNTSTMPS",
+						"TZNTSTMPL"
+                                   ]
+                                 }
+       }
+           ]
+}

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" schemaVersion="3.0" dataCategory="CUBE" cacheInvalidationPeriod="NONE" id="HA300::CVC_SALES_CASCADE_TOP_00" applyPrivilegeType="NONE" outputViewType="Aggregation" enforceSqlExecution="false">
+<descriptions defaultDescription="CVC_CASCADE_TOP_LEVEL_00"/>
+<localVariables>
+  <variable id="VAR_PRODUCT_GROUP_TOP_LEVEL">
+    <descriptions defaultDescription="VAR_PRODUCT_GROUP_TOP_LEVEL"/>
+    <variableProperties datatype="VARCHAR" defaultValue="" length="60" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>HA300::CVD_PRODUCTS_CASCADE_VHELP_00</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>PRODUCT_GROUP_TEXT</externalLikeElementName>
+      </valueDomain>
+      <selection multiLine="true" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+  <variable id="VAR_PRODUCT_TOP_LEVEL">
+    <descriptions defaultDescription="VAR_PRODUCT_TOP_LEVEL"/>
+    <variableProperties datatype="VARCHAR" defaultValue="" length="30" scale="NaN">
+      <valueDomain type="AttributeValue">
+        <externalLikeStructureName>HA300::CVD_PRODUCTS_CASCADE_VHELP_00</externalLikeStructureName>
+        <externalLikeStructureType>CALCULATION_VIEW</externalLikeStructureType>
+        <externalLikeElementName>PRODUCT_TEXT</externalLikeElementName>
+        <variableMapping xsi:type="Variable:VariableMapping">
+          <targetVariable name="VAR_VAL_HELP_PRODUCT_GRP"/>
+          <localVariable>VAR_PRODUCT_GROUP_TOP_LEVEL</localVariable>
+        </variableMapping>
+      </valueDomain>
+      <selection multiLine="true" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="HA300::SALES_DATA">
+    <resourceUri>HA300::SALES_DATA</resourceUri>
+  </DataSource>
+  <DataSource id="HA300::CVD_PRODUCTS_CASCADE_VHELP_00">
+    <resourceUri>HA300::CVD_PRODUCTS_CASCADE_VHELP_00</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PRODUCT_TEXT"/>
+      <viewAttribute id="PRODUCT_GROUP_TEXT"/>
+      <viewAttribute aggregationType="sum" id="QUANTITY"/>
+      <viewAttribute id="QTY_UNIT"/>
+      <viewAttribute hidden="true" id="JOIN$PRODUCT_ID$PRODUCT_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="HA300::SALES_DATA">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRODUCT_ID$PRODUCT_ID" source="PRODUCT_ID"/>
+    </input>
+    <input node="HA300::CVD_PRODUCTS_CASCADE_VHELP_00">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PRODUCT_ID$PRODUCT_ID" source="PRODUCT_ID"/>
+    </input>
+    <joinAttribute name="JOIN$PRODUCT_ID$PRODUCT_ID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="PRODUCT_TEXT" displayAttribute="false" order="1" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRODUCT_TEXT"/>
+      <localVariable>VAR_PRODUCT_TOP_LEVEL</localVariable>
+      <keyMapping columnObjectName="Join_1" columnName="PRODUCT_TEXT"/>
+    </attribute>
+    <attribute id="PRODUCT_GROUP_TEXT" displayAttribute="false" order="2" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRODUCT_GROUP_TEXT"/>
+      <localVariable>VAR_PRODUCT_GROUP_TOP_LEVEL</localVariable>
+      <keyMapping columnObjectName="Join_1" columnName="PRODUCT_GROUP_TEXT"/>
+    </attribute>
+    <attribute id="QTY_UNIT" displayAttribute="false" order="4" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QTY_UNIT"/>
+      <keyMapping columnObjectName="Join_1" columnName="QTY_UNIT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure aggregationType="sum" id="QUANTITY" order="3" measureType="simple">
+      <descriptions defaultDescription="QUANTITY"/>
+      <measureMapping columnObjectName="Join_1" columnName="QUANTITY"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectNameSpace="MeasureGroup" modelObjectName="Output">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="Join_1">
+      <upperLeftCorner x="90" y="248"/>
+      <rectangleSize width="160" height="30"/>
+    </shape>
+    <shape modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" modelObjectName="HA300::SALES_DATA">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="187"/>
+    </shape>
+    <shape modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" modelObjectName="HA300::CVD_PRODUCTS_CASCADE_VHELP_00">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="269"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

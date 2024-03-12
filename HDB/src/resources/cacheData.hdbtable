@@ -1,0 +1,1 @@
+column table "HA300::CACHEDTABLE" (cachedColumn NVARCHAR(20), notCachedColumn NVARCHAR(20), measure Decimal(20,2))

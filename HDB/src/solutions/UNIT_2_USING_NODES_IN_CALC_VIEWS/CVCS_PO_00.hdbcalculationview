@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" calculationScenarioType="TREE_BASED" schemaVersion="3.0" defaultClient="$$client$$" dataCategory="CUBE" cacheInvalidationPeriod="NONE" id="HA300::CVCS_PO_00" applyPrivilegeType="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Purchase Orders"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="HA300::SNWD_PO" partitionedExecution="false">
+    <resourceUri>HA300::SNWD_PO</resourceUri>
+  </DataSource>
+  <DataSource id="HA300::SNWD_PO_I" partitionedExecution="false">
+    <resourceUri>HA300::SNWD_PO_I</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinType="referential" partitionedExecution="false">
+    <viewAttributes>
+      <viewAttribute id="CLIENT" measureType="simple"/>
+      <viewAttribute id="PARTNER_GUID" measureType="simple"/>
+      <viewAttribute id="PO_ID" measureType="simple"/>
+      <viewAttribute id="CURRENCY_CODE" measureType="simple"/>
+      <viewAttribute aggregationType="sum" id="GROSS_AMOUNT" measureType="simple"/>
+      <viewAttribute aggregationType="sum" id="NET_AMOUNT" measureType="simple"/>
+      <viewAttribute id="PO_ITEM_POS" measureType="simple"/>
+      <viewAttribute id="PRODUCT_GUID" measureType="simple"/>
+      <viewAttribute aggregationType="sum" id="TAX_AMOUNT" measureType="simple"/>
+      <viewAttribute hidden="true" id="JOIN$NODE_KEY$PARENT_KEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="HA300::SNWD_PO">
+      <mapping xsi:type="Calculation:AttributeMapping" source="CLIENT" target="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PARTNER_GUID" target="PARTNER_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PO_ID" target="PO_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$NODE_KEY$PARENT_KEY" source="NODE_KEY"/>
+    </input>
+    <input node="HA300::SNWD_PO_I">
+      <mapping xsi:type="Calculation:AttributeMapping" source="CURRENCY_CODE" target="CURRENCY_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="GROSS_AMOUNT" target="GROSS_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="NET_AMOUNT" target="NET_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PO_ITEM_POS" target="PO_ITEM_POS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PRODUCT_GUID" target="PRODUCT_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="TAX_AMOUNT" target="TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$NODE_KEY$PARENT_KEY" source="PARENT_KEY"/>
+    </input>
+    <joinAttribute name="CLIENT"/>
+    <joinAttribute name="JOIN$NODE_KEY$PARENT_KEY"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="CLIENT" displayAttribute="false" order="1" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="Join_1" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="PO_ITEM_POS" displayAttribute="false" order="2" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PO_ITEM_POS"/>
+      <keyMapping columnObjectName="Join_1" columnName="PO_ITEM_POS"/>
+    </attribute>
+    <attribute id="PO_ID" displayAttribute="false" order="3" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PO_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="PO_ID"/>
+    </attribute>
+    <attribute id="CURRENCY_CODE" displayAttribute="false" order="4" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CURRENCY_CODE"/>
+      <keyMapping columnObjectName="Join_1" columnName="CURRENCY_CODE"/>
+    </attribute>
+    <attribute id="CLIENT$local">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="Join_1" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="PARTNER_GUID$local">
+      <descriptions defaultDescription="PARTNER_GUID"/>
+      <keyMapping columnObjectName="Join_1" columnName="PARTNER_GUID"/>
+    </attribute>
+    <attribute id="PRODUCT_GUID$local">
+      <descriptions defaultDescription="PRODUCT_GUID"/>
+      <keyMapping columnObjectName="Join_1" columnName="PRODUCT_GUID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure aggregationType="sum" id="GROSS_AMOUNT" order="5" measureType="simple">
+      <descriptions defaultDescription="GROSS_AMOUNT"/>
+      <measureMapping columnObjectName="Join_1" columnName="GROSS_AMOUNT"/>
+    </measure>
+    <measure aggregationType="sum" id="TAX_AMOUNT" order="6" measureType="simple">
+      <descriptions defaultDescription="TAX_AMOUNT"/>
+      <measureMapping columnObjectName="Join_1" columnName="TAX_AMOUNT"/>
+    </measure>
+  
+    <measure aggregationType="sum" id="NET_AMOUNT" order="7" measureType="simple">
+      <descriptions defaultDescription="NET_AMOUNT"/>
+      <measureMapping columnObjectName="Join_1" columnName="NET_AMOUNT"/>
+    </measure></baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+  <sharedDimensions>
+    <logicalJoin associatedObjectUri="HA300::CVD_BP_JOIN_00">
+      <attributes>
+        <attributeRef>CLIENT$local</attributeRef>
+        <attributeRef>PARTNER_GUID$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>CLIENT</attributeName>
+        <attributeName>NODE_KEY</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="referential" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="CLIENT_BP" attributeName="CLIENT" hidden="true"/>
+        <attributeReference alias="NODE_KEY_BP" attributeName="NODE_KEY" hidden="true"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="HA300::CVD_PD">
+      <attributes>
+        <attributeRef>CLIENT$local</attributeRef>
+        <attributeRef>PRODUCT_GUID$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>CLIENT</attributeName>
+        <attributeName>NODE_KEY</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="referential" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference alias="CLIENT_PD" attributeName="CLIENT" hidden="true"/>
+        <attributeReference alias="NODE_KEY_PD" attributeName="NODE_KEY" hidden="true"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+  </sharedDimensions>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectNameSpace="MeasureGroup" modelObjectName="Output">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="140"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="Join_1">
+      <upperLeftCorner x="92" y="247"/>
+      <rectangleSize width="140" height="30"/>
+    </shape>
+    <shape modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" modelObjectName="HA300::SNWD_PO">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" modelObjectName="HA300::SNWD_PO_I">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository" modelObjectName="Join_1">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="HA300::CVD_BP_JOIN_00" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape><shape><upperLeftCorner/><rectangleSize/></shape>
+    <shape modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository" modelObjectName="HA300::CVD_PD">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
